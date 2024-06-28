@@ -1,16 +1,18 @@
 import React from 'react'
-import { Text, View } from 'react-native'
 import HomeStackNavigation from '../navigations/HomeStackNavigation'
-import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/native-stack/types'
-import { ParamListBase } from '@react-navigation/native'
+import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import MovieDetail from '../navigations/MovieDetail'
 
-function Home(
-  props: NativeStackScreenProps<ParamListBase, 'Home'>,
-): JSX.Element {
+const Tab = createNativeStackNavigator()
+
+function Home(): JSX.Element {
   return (
-    <View>
-      <HomeStackNavigation {...props} />
-    </View>
+    // <NavigationContainer>
+    <Tab.Navigator>
+      <Tab.Screen name="HomeStack" component={HomeStackNavigation} />
+      <Tab.Screen name="MovieDetail" component={MovieDetail} />
+    </Tab.Navigator>
+    // </NavigationContainer>
   )
 }
 
