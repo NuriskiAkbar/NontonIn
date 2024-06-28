@@ -7,12 +7,10 @@ const Tab = createNativeStackNavigator()
 
 function Home(): JSX.Element {
   return (
-    // <NavigationContainer>
     <Tab.Navigator>
       <Tab.Screen name="HomeStack" component={HomeStackNavigation} />
       <Tab.Screen name="MovieDetail" component={MovieDetail} />
     </Tab.Navigator>
-    // </NavigationContainer>
   )
 }
 

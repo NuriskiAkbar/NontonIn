@@ -5,7 +5,7 @@ import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/nati
 
 function HomeStackNavigation({
   navigation,
-}: NativeStackScreenProps<ParamListBase, 'Home'>): JSX.Element {
+}: NativeStackScreenProps<ParamListBase, 'HomeStack'>): JSX.Element {
   return (
     <View>
       <Text>HomeStackNavigation</Text>
