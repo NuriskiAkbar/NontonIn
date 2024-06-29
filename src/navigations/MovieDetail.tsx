@@ -1,38 +1,71 @@
-import { API_URL, TOKEN } from '@env'
-import React from 'react'
-import { Button, Text, View } from 'react-native'
+import { TOKEN } from '@env'
+import React, { useEffect, useState } from 'react'
+import { Text, View } from 'react-native'
+import { Movie } from '../types/app'
 
-function MovieDetail(): JSX.Element {
-  const fetchData = async (): Promise<void> => {
-    const ACCESS_TOKEN = TOKEN
-    const url = API_URL
+const MovieDetail = ({ route }: any): JSX.Element => {
+  const { id } = route.params
 
-    console.log(url)
+  const [movie, setMovie] = useState<Movie>({})
 
-    if (!ACCESS_TOKEN || !url) {
-      throw new Error('Env variables not set')
-    }
+  const [movieLists, setMovieLists] = useState<Movie[]>([])
 
+  const getMovie = async () => {
+    const url = `https://api.themoviedb.org/3/movie/${id}`
     const options = {
       method: 'GET',
       headers: {
         accept: 'application/json',
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
+        Authorization: `Bearer ${TOKEN}`,
       },
     }
+
     try {
       const request = await fetch(url, options)
       const response = await request.json()
-      console.log(JSON.stringify(response, null, '\t'))
+
+      setMovie(response)
     } catch (error) {
       console.log(error)
     }
   }
 
+  const getMovieRecommendation = async () => {
+    const url = `https://api.themoviedb.org/3/movie/${id}/recommendations`
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        Authorization: `Bearer ${TOKEN}`,
+      },
+    }
+
+    try {
+      const request = await fetch(url, options)
+      const response = await request.json()
+
+      console.log(JSON.stringify(response, null, 2))
+
+      setMovieLists(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getMovie()
+    getMovieRecommendation()
+  }, [])
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Movie Detail Page</Text>
-      <Button title="Fetch Data" onPress={fetchData} />
+    <View
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        marginTop: 32,
+      }}
+    >
+      <Text style={{ fontSize: 30 }}>Movie ID: {movie.title}</Text>
     </View>
   )
 }

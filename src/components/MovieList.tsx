@@ -29,7 +29,6 @@ function MovieList({ title, path, coverType }: MovieListProps): JSX.Element {
     try {
       const request = await fetch(url, options)
       const response = await request.json()
-      console.log(response)
 
       setMovies(response.results)
     } catch (error) {
