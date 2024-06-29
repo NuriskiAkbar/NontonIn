@@ -1,9 +1,9 @@
-import React, {useState} from 'react'
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
-// import KeywordSearch from '../components/search/KeywordSearch'
-// import CategorySearch from '../components/search/CategorySearch'
+import React, { useState } from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import KeywordSearch from '../components/QuerySearch'
+import CategorySearch from '../components/CategorySearch'
 
-export default function Search(): JSX.Element {
+const Search = (): JSX.Element => {
   const [selectedBar, setSelectedBar] = useState<string>('keyword')
 
   return (
@@ -30,7 +30,7 @@ export default function Search(): JSX.Element {
             </TouchableOpacity>
           ))}
         </View>
-        {/* {selectedBar === 'keyword' ? <KeywordSearch /> : <CategorySearch />} */}
+        {selectedBar === 'keyword' ? <KeywordSearch /> : <CategorySearch />}
       </View>
     </View>
   )
@@ -58,3 +58,5 @@ const styles = StyleSheet.create({
     textTransform: 'capitalize',
   },
 })
+
+export default Search
