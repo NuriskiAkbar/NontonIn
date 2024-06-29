@@ -1,12 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Movie } from '../types/app'
+import React, { useState, useEffect } from 'react'
+import { View, Text, StyleSheet, FlatList } from 'react-native'
+import type { MovieListProps, Movie } from '../types/app'
 import { TOKEN } from '@env'
+import MovieItem from './MovieItem'
 
-function MovieList({ title, path, coverType }: MovieListProps): JSX.Element {
+const coverImageSize = {
+  backdrop: {
+    width: 280,
+    height: 160,
+  },
+  poster: {
+    width: 100,
+    height: 160,
+  },
+}
+
+const MovieList = ({ title, path, coverType }: MovieListProps): JSX.Element => {
   const [movies, setMovies] = useState<Movie[]>([])
 
-  const getMovies = async (): Promise<void> => {
+  useEffect(() => {
+    getMovieList()
+  }, [])
+
+  const getMovieList = (): void => {
     const url = `https://api.themoviedb.org/3/${path}`
     const options = {
       method: 'GET',
@@ -15,49 +31,67 @@ function MovieList({ title, path, coverType }: MovieListProps): JSX.Element {
         Authorization: `Bearer ${TOKEN}`,
       },
     }
-    try {
-      const request = await fetch(url, options)
-      const response = await request.json()
-      console.log(response)
 
-      setMovies(response.results)
-    } catch (error) {
-      console.log(error)
-    }
+    fetch(url, options)
+      .then(async (response) => await response.json())
+      .then((response) => {
+        setMovies(response.results)
+      })
+      .catch((errorResponse) => {
+        console.log(errorResponse)
+      })
   }
-
-  useEffect(() => {
-    getMovies()
-  }, [])
 
   return (
     <View>
       <View style={styles.header}>
-        <View style={styles.purplelabel}></View>
+        <View style={styles.purpleLabel}></View>
         <Text style={styles.title}>{title}</Text>
       </View>
+      <FlatList
+        style={{
+          ...styles.movieList,
+          maxHeight: coverImageSize[coverType].height,
+        }}
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        data={movies}
+        renderItem={({ item }) => (
+          <MovieItem
+            movie={item}
+            size={coverImageSize[coverType]}
+            coverType={coverType}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </View>
   )
 }
 
-export default MovieList
-
 const styles = StyleSheet.create({
   header: {
-    marginLeft: 16,
+    marginLeft: 6,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
   },
-  purplelabel: {
-    width: 20,
+  purpleLabel: {
+    width: 2,
     height: 40,
-    borderRadius: 20,
-    backgroundColor: '#8978a4',
+    borderRadius: 4,
+    backgroundColor: '#8978A4',
     marginRight: 12,
+    marginLeft: 18,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '900',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  movieList: {
+    paddingLeft: 24,
+    marginTop: 8,
   },
 })
+
+export default MovieList

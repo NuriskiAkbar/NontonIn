@@ -1,7 +1,13 @@
 export type MovieListProps = {
-  title: 'string'
-  path: 'string'
+  title: string
+  path: string
   coverType: 'backdrop' | 'poster'
+}
+
+export interface MovieItemProps {
+  movie: Movie
+  size: { width: number; height: number }
+  coverType: 'poster' | 'backdrop'
 }
 
 type Genre = { id: number; name: string }
