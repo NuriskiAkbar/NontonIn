@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native'
-import KeywordSearch from '../components/search/KeywordSearch'
-import CategorySearch from '../components/search/CategorySearch'
+// import KeywordSearch from '../components/search/KeywordSearch'
+// import CategorySearch from '../components/search/CategorySearch'
 
 export default function Search(): JSX.Element {
   const [selectedBar, setSelectedBar] = useState<string>('keyword')
@@ -30,7 +30,7 @@ export default function Search(): JSX.Element {
             </TouchableOpacity>
           ))}
         </View>
-        {selectedBar === 'keyword' ? <KeywordSearch /> : <CategorySearch />}
+        {/* {selectedBar === 'keyword' ? <KeywordSearch /> : <CategorySearch />} */}
       </View>
     </View>
   )

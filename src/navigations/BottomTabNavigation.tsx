@@ -3,7 +3,7 @@ import { Feather } from '@expo/vector-icons'
 import React from 'react'
 import Home from '../screens/Home'
 import Search from '../screens/Search'
-import Favorite from '../screens/Favorite'
+import Favorite from '../screens/Favourite'
 
 const Tab = createBottomTabNavigator()
 
