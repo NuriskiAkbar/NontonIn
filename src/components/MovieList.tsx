@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Movie } from '../types/app'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
+import { Movie, MovieListProps } from '../types/app'
 import { TOKEN } from '@env'
+import MovieItem from './MovieItem'
+const coverImageSize = {
+  backdrop: {
+    width: 280,
+    height: 160,
+  },
+  poster: {
+    width: 100,
+    height: 160,
+  },
+}
 
 function MovieList({ title, path, coverType }: MovieListProps): JSX.Element {
   const [movies, setMovies] = useState<Movie[]>([])
@@ -36,6 +47,24 @@ function MovieList({ title, path, coverType }: MovieListProps): JSX.Element {
         <View style={styles.purplelabel}></View>
         <Text style={styles.title}>{title}</Text>
       </View>
+
+      <FlatList
+        style={{
+          ...styles.movieList,
+          maxHeight: coverImageSize[coverType].height,
+        }}
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        data={movies}
+        renderItem={({ item }) => (
+          <MovieItem
+            movie={item}
+            coverType={coverType}
+            size={coverImageSize[coverType]}
+          />
+        )}
+        keyExtractor={(item) => item.id.toString()}
+      />
     </View>
   )
 }
@@ -59,5 +88,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '900',
+  },
+  movieList: {
+    paddingLeft: 4,
+    marginTop: 8,
   },
 })

@@ -1,7 +1,5 @@
-import { ParamListBase } from '@react-navigation/native'
 import React from 'react'
 import { ScrollView, StatusBar, StyleSheet, View } from 'react-native'
-import { NativeStackScreenProps } from 'react-native-screens/lib/typescript/native-stack/types'
 import { MovieListProps } from '../types/app'
 import MovieList from '../components/MovieList'
 
